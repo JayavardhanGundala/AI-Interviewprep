@@ -2,8 +2,11 @@ import React, { useState } from 'react'
 import {App_Features} from "./../utils/data.js"
 import { useNavigate } from 'react-router-dom'
 import {LuSparkles} from "react-icons/lu"
+import Modal from '../components/Modal.jsx'
+import SignUp from './Auth/SignUp.jsx'
 
 const LandingPage = () => {
+    console.log(App_Features)
     const navigate=useNavigate()
     const [openAuthModel,setOpenAuthModel]=useState(false)
     const [currentPage,setCurrentPage]=useState("login")
@@ -66,6 +69,70 @@ const LandingPage = () => {
         </div>
 
     </div>
+    <div className='w-full min-h-full bg-[#FFFCEF] mt-10'>
+        <div className='container mx-auto px-4 pt-10 pb-20'>
+            <section className='mt-15'>
+                <h2 className='text-2xl font-medium text-center mb-12'>Features That Make You Shine</h2>
+                <div className='flex flex-col items-center gap-8'>
+                    {/*Cards*/}
+                    <div className='grid grid-cols-1 md:grid-cols-3 gap-8 w-full  '>
+                        {App_Features.slice(0,3).map((features)=>{
+    
+                           return(
+                             <div key={features.id} className='bg-[#FFFEF8] p-6 rounded-xl shadow-xs hover:shadow-lg shadow-amber-100 transition border border-amber-100'>
+                                <h3 className='text-base font-semibold mb-3'>{features.title}</h3>
+                                <p className='text-gray-600'>{features.description}</p>
+                                
+
+                            </div>
+                           )    
+                        })}
+
+                    </div>
+                    {/*cards*/}
+                    <div className='grid grid-cols-1 md:grid-cols-2 gap-8 '>
+                        {App_Features.slice(3).map((features)=>{
+                           return(
+                             <div key={features.id} className='bg-[#FFFEF8] p-6 rounded-xl shadow-xs hover:shadow-lg shadow-amber-100 transition border border-amber-100'>
+                                <h3 className='text-base font-semibold mb-3'>{features.title}</h3>
+                                <p className='text-gray-600'>{features.description}</p>
+                                
+
+                            </div>
+                           )
+                        })}
+
+                    </div>
+
+                    <div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </div>
+    <Modal isOpen={openAuthModel} onClose={()=>{
+        setOpenAuthModel(false)
+        setCurrentPage("login")
+    }}
+    hideHeaders
+    >
+        <div>
+            {currentPage=="login" &&(
+                <Login setCurrentPage={setCurrentPage}/>
+
+            )}
+            {currentPage=="signup" && (
+                <SignUp setCurrentPage={setCurrentPage}/>
+            )
+            }
+        </div>
+
+    </Modal>
     </>
   )
 }
